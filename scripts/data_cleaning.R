@@ -45,6 +45,15 @@ clean_purcprod <- raw_purcprod |>
       statistic == 'Median' ~ q25,
       statistic == 'Total' ~ value
     )
+  ) |>
+  mutate(
+    # new labels for plots
+    unit_lab = str_replace(
+      ylab,
+      "(?<=:)(.*)",
+      ~ str_remove_all(.x, "(Mean|Median|Total|[()])")
+    ) |>
+      str_squish()
   ) %>%
   data.frame()
 

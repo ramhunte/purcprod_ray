@@ -70,7 +70,10 @@ plot_func <- function(data, lab, facet) {
     scale_color_manual(values = line_col) +
     scale_linetype_manual(values = line_ty) +
     theme_minimal() +
-    labs(y = lab, x = "Year") +
+    labs(
+      y = lab,
+      x = "Year"
+    ) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     theme(

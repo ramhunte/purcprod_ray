@@ -38,11 +38,21 @@ server <- function(input, output, session) {
   ##Plot for the summary tab
   output$sumplot <- renderPlot(
     {
-      # return nothing if plot is Null
-      req(sum_plot_df())
+      # creating a validatement statement requiring valid inputs
+      validate(
+        need(prod_plot_df(), "No data available for these selected inputs"),
+        need(
+          nrow(prod_plot_df()) > 0,
+          "No data available for these selected inputs"
+        )
+      )
 
       # run function to create plot with summary tab data
-      plot_func(data = sum_plot_df(), lab = input$statInput, facet = "metric")
+      plot_func(
+        data = sum_plot_df(),
+        lab = input$statInput,
+        facet = "unit_lab"
+      )
     },
     height = 800,
     width = 1100
@@ -88,11 +98,20 @@ server <- function(input, output, session) {
   ##Plot for the product tab
   output$productplot <- renderPlot(
     {
-      # return nothing if plot is Null
-      req(prod_plot_df())
+      validate(
+        need(prod_plot_df(), "No data available for these selected inputs"),
+        need(
+          nrow(prod_plot_df()) > 0,
+          "No data available for these selected inputs"
+        )
+      )
 
       # run function to create plot with summary tab data
-      plot_func(data = prod_plot_df(), lab = input$stat2Input, facet = "type")
+      plot_func(
+        data = prod_plot_df(),
+        lab = input$stat2Input,
+        facet = "unit_lab"
+      )
     },
     height = 800,
     width = 1100
