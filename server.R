@@ -1,4 +1,6 @@
 server <- function(input, output, session) {
+  thematic::thematic_shiny()
+
   ##################### Reactive Summary DF's #########################
 
   # reactive data frame for Summary tab
@@ -40,7 +42,7 @@ server <- function(input, output, session) {
       req(sum_plot_df())
 
       # run function to create plot with summary tab data
-      plot_func(data = sum_plot_df(), lab = input$statInput)
+      plot_func(data = sum_plot_df(), lab = input$statInput, facet = "metric")
     },
     height = 800,
     width = 1100
@@ -90,7 +92,7 @@ server <- function(input, output, session) {
       req(prod_plot_df())
 
       # run function to create plot with summary tab data
-      plot_func(data = prod_plot_df(), lab = input$stat2Input)
+      plot_func(data = prod_plot_df(), lab = input$stat2Input, facet = "type")
     },
     height = 800,
     width = 1100

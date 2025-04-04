@@ -1,6 +1,6 @@
 # setting aesthetics of plot
 
-# line colors
+# line colors ----
 line_col <- c(
   "All production" = "black",
   "Groundfish production" = '#C1052F',
@@ -28,7 +28,7 @@ line_col <- c(
   "Non-processor" = '#D89B2C'
 )
 
-# line type
+# line type ----
 line_ty <- c(
   "California" = 'solid',
   "Washington and Oregon" = 'solid',
@@ -56,12 +56,9 @@ line_ty <- c(
   "Other species" = 'dashed'
 )
 
-##Defining standard plot elements
-point_size <- 4
-line_size <- 0.75
 
-# function for making gggplot
-plot_func <- function(data, lab) {
+# custom ggplot function ----
+plot_func <- function(data, lab, facet) {
   # return nothing if plot is Null
   if (is.null(data)) {
     return()
@@ -73,21 +70,30 @@ plot_func <- function(data, lab) {
     scale_color_manual(values = line_col) +
     scale_linetype_manual(values = line_ty) +
     theme_minimal() +
+    labs(y = lab, x = "Year") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
     theme(
-      text = element_text(size = 14),
-      axis.text = element_text(size = 12),
-      strip.text = element_text(size = 14)
+      text = element_text(size = 22),
+      axis.text = element_text(size = 18),
+      strip.text = element_text(size = 18),
+      legend.title = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      panel.grid.major.y = element_line(size = 1.2),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_line(size = 1.2),
+      axis.line = element_line(color = "grey", linewidth = 1) # Adds borders to only x and y axes
     ) +
-    geom_point(aes(color = variable), size = point_size) +
+    geom_point(aes(color = variable), size = 4) +
     geom_line(
       aes(color = variable, linetype = variable),
-      size = line_size
+      size = 0.75
     ) +
     geom_ribbon(
       aes(ymax = upper, ymin = lower, fill = variable),
-      alpha = .25
+      alpha = .2
     ) +
-    facet_wrap(~ylab, scales = 'free_y', ncol = 2) +
-    labs(y = lab) +
+    # facet wrap based on the column specified to be faceted in the function
+    facet_wrap(as.formula(paste("~", facet)), scales = 'free_y', ncol = 2) +
     scale_x_continuous(breaks = pretty_breaks())
 }

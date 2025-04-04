@@ -1,6 +1,7 @@
 # UI creating a fluidPage
 shinyUI(
   fluidPage(
+    theme = bslib::bs_theme(bootswatch = "materia"),
     titlePanel("FISHEyE: Shoreside purchase and production mini-app"),
 
     # page layout
