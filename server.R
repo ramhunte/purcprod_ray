@@ -5,32 +5,34 @@ server <- function(input, output, session) {
 
   # reactive data frame for Summary tab
   sum_plot_df <- reactive({
-    if (input$tab_bottom == "Production Activities") {
-      df <- sumdf_prac |>
-        filter(
-          metric %in% input$metricInput,
-          statistic == input$statInput,
-          variable %in% c(input$prodacInput, input$ospsInput)
-        )
-    } else if (input$tab_bottom == "Region") {
-      df <- sumdf_reg |>
-        filter(
-          metric %in% input$metricInput,
-          statistic == input$statInput,
-          variable %in% input$regionInput,
-          cs %in% input$pracs1Input
-        )
-    } else if (input$tab_bottom == "Processor Size/Type") {
-      df <- sumdf_size |>
-        filter(
-          metric %in% input$metricInput,
-          statistic == input$statInput,
-          variable %in% input$sizeInput,
-          cs %in% input$pracs1Input
-        )
-    }
+    if (input$tab_top == "Summary") {
+      if (input$tab_bottom == "Production Activities") {
+        df <- sumdf_prac |>
+          filter(
+            metric %in% input$metricInput,
+            statistic == input$statInput,
+            variable %in% c(input$prodacInput, input$ospsInput)
+          )
+      } else if (input$tab_bottom == "Region") {
+        df <- sumdf_reg |>
+          filter(
+            metric %in% input$metricInput,
+            statistic == input$statInput,
+            variable %in% input$regionInput,
+            cs %in% input$pracs1Input
+          )
+      } else if (input$tab_bottom == "Processor Size/Type") {
+        df <- sumdf_size |>
+          filter(
+            metric %in% input$metricInput,
+            statistic == input$statInput,
+            variable %in% input$sizeInput,
+            cs %in% input$pracs2Input
+          )
+      }
 
-    df # Return the filtered data frame
+      df # Return the filtered data frame
+    }
   })
 
   ##################### Reactive Summary Plots #########################
@@ -38,15 +40,14 @@ server <- function(input, output, session) {
   ##Plot for the summary tab
   output$sumplot <- renderPlot(
     {
-      # creating a validatement statement requiring valid inputs
+      # # creating a validatement statement requiring valid inputs
       validate(
-        need(prod_plot_df(), "No data available for these selected inputs"),
+        need(sum_plot_df(), "No data available for these selected inputs"),
         need(
-          nrow(prod_plot_df()) > 0,
+          nrow(sum_plot_df()) > 0,
           "No data available for these selected inputs"
         )
       )
-
       # run function to create plot with summary tab data
       plot_func(
         data = sum_plot_df(),
@@ -62,35 +63,37 @@ server <- function(input, output, session) {
 
   # reactive data frame for By Product Type tab
   prod_plot_df <- reactive({
-    if (input$tab_bottom == "Production Activities") {
-      df <- proddf_prac |>
-        filter(
-          metric %in% input$metric2Input,
-          type %in% input$protypeInput,
-          statistic == input$stat2Input,
-          variable %in% c(input$prodacInput, input$ospsInput)
-        )
-    } else if (input$tab_bottom == "Region") {
-      df <- proddf_reg |>
-        filter(
-          metric %in% input$metric2Input,
-          type %in% input$protypeInput,
-          statistic == input$stat2Input,
-          variable %in% input$regionInput,
-          cs %in% input$pracs1Input
-        )
-    } else if (input$tab_bottom == "Processor Size/Type") {
-      df <- proddf_size |>
-        filter(
-          metric %in% input$metric2Input,
-          type %in% input$protypeInput,
-          statistic == input$stat2Input,
-          variable %in% input$sizeInput,
-          cs %in% input$pracs1Input
-        )
-    }
+    if (input$tab_top == "By Product Type") {
+      if (input$tab_bottom == "Production Activities") {
+        df <- proddf_prac |>
+          filter(
+            metric %in% input$metric2Input,
+            type %in% input$protypeInput,
+            statistic == input$stat2Input,
+            variable %in% c(input$prodacInput, input$ospsInput)
+          )
+      } else if (input$tab_bottom == "Region") {
+        df <- proddf_reg |>
+          filter(
+            metric %in% input$metric2Input,
+            type %in% input$protypeInput,
+            statistic == input$stat2Input,
+            variable %in% input$regionInput,
+            cs %in% input$pracs1Input
+          )
+      } else if (input$tab_bottom == "Processor Size/Type") {
+        df <- proddf_size |>
+          filter(
+            metric %in% input$metric2Input,
+            type %in% input$protypeInput,
+            statistic == input$stat2Input,
+            variable %in% input$sizeInput,
+            cs %in% input$pracs2Input
+          )
+      }
 
-    df # Return the filtered data frame
+      df # Return the filtered data frame
+    }
   })
 
   ##################### Reactive By Product Type Plot ###########################
