@@ -1,5 +1,5 @@
 server <- function(input, output, session) {
-  thematic::thematic_shiny()
+  # thematic::thematic_shiny()
 
   ##################### Reactive Summary DF's #########################
 
@@ -54,8 +54,8 @@ server <- function(input, output, session) {
         facet = "unit_lab"
       )
     },
-    height = 800,
-    width = 1100
+    height = 750,
+    width = 1020
   )
 
   ##################### Reactive By Product Type DF ########################### ----
@@ -113,8 +113,8 @@ server <- function(input, output, session) {
         facet = "unit_lab"
       )
     },
-    height = 800,
-    width = 1100
+    height = 750,
+    width = 1020
   )
   ##################### Reactive Data Table  #########################
   ##Creating the data table
@@ -122,7 +122,7 @@ server <- function(input, output, session) {
     {
       if (input$tab_top == "Summary") {
         df <- sum_plot_df() |>
-          select(-c(ylab, tab)) |>
+          select(-c(ylab, tab, unit_lab)) |>
           mutate(
             variance = round(variance, 2),
             q25 = round(q25, 2),
@@ -133,7 +133,7 @@ server <- function(input, output, session) {
           )
       } else if (input$tab_top == "By Product Type") {
         df <- prod_plot_df() |>
-          select(-c(ylab, tab)) |>
+          select(-c(ylab, tab, unit_lab)) |>
           mutate(
             variance = round(variance, 2),
             q25 = round(q25, 2),
@@ -145,7 +145,7 @@ server <- function(input, output, session) {
       }
       df
     },
-    height = 800,
-    width = 1100
+    height = 750,
+    width = 1020
   )
 }

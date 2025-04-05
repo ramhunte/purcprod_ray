@@ -74,7 +74,7 @@ plot_func <- function(data, lab, facet) {
       y = lab,
       x = "Year"
     ) +
-    scale_x_continuous(expand = c(0, 0)) +
+    scale_x_continuous(breaks = pretty_breaks()) +
     scale_y_continuous(expand = c(0, 0)) +
     theme(
       text = element_text(size = 22),
@@ -97,6 +97,5 @@ plot_func <- function(data, lab, facet) {
       alpha = .2
     ) +
     # facet wrap based on the column specified to be faceted in the function
-    facet_wrap(as.formula(paste("~", facet)), scales = 'free_y', ncol = 2) +
-    scale_x_continuous(breaks = pretty_breaks())
+    facet_wrap(as.formula(paste("~", facet)), scales = 'free_y', ncol = 2)
 }

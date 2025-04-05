@@ -1,21 +1,28 @@
+library(shiny)
+library(bslib)
+
 # UI creating a fluidPage
 shinyUI(
-  fluidPage(
-    # linkin CSS
-    tags$head(
-      tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
-    ),
-
-    theme = bslib::bs_theme(bootswatch = "materia"),
-
+  page_fluid(
     # navbar page at the top
-    navbarPage(
+    theme = bs_theme(
+      bootswatch = "materia",
+      primary = "lightblue",
+      bg = "#005377",
+      fg = "white",
+      secondary = "lightblue",
+      # success = "#009E73",
+    ),
+    page_navbar(
       id = "navbar",
       title = "Purchase Production App",
-      footer = "test",
+
+      tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
+      ),
 
       # tabPanel 1
-      tabPanel(
+      nav_panel(
         "Explore the Data",
         # page layout
         sidebarLayout(
@@ -148,6 +155,7 @@ shinyUI(
 
           # START mainPanel
           mainPanel(
+            style = page_height,
             # START tabsetPanel
             tabsetPanel(
               type = "tabs",
@@ -172,19 +180,36 @@ shinyUI(
       ), # END tabPanel 1
 
       # tabPanel 2
-      tabPanel(
-        "Information Page"
+      nav_panel(
+        "Information Page",
+        style = page_height,
+        fluidRow(
+          # use columns to create white space on sides
+          column(1),
+          column(10, includeMarkdown("text/info.md")),
+          column(1)
+        ),
       ), #END tabPanel 2
 
       #tabPanel 3
-      tabPanel(
-        "Bulletin Board"
+      nav_panel(
+        "Bulletin Board",
+        style = page_height,
       ), # END tabPanel 3
 
       #tabPanel 4
-      tabPanel(
-        "Contact Us"
-      ) # END tabPanel 4
-    ) # END navbarPage
-  ) # END fluidPage
+      nav_panel(
+        "Contact Us",
+        style = page_height,
+        fluidRow(
+          # use columns to create white space on sides
+          column(1),
+          column(10, includeMarkdown("text/contact.md")),
+          column(1)
+        ), # END intro text fluidRow
+      ), # END tabPanel 4
+
+      footer = footer() # END footer
+    ) # END fluidPage
+  )
 ) # END UI

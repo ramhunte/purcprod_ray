@@ -20,6 +20,9 @@ source("scripts/data_cleaning.R")
 # reading in plotting script
 source("scripts/plotting.R")
 
+# reading in footer and header script
+source("scripts/head_foot.R")
+
 # choices for UI widgets
 
 # Choices for Product Activities (prodacInput)
