@@ -81,6 +81,7 @@ plot_func <- function(data, lab, facet) {
       axis.text = element_text(size = 18),
       strip.text = element_text(size = 18),
       legend.title = element_blank(),
+      legend.position = "bottom", # Moves the legend to the bottom
       panel.grid.minor.y = element_blank(),
       panel.grid.major.y = element_line(size = 1.2),
       panel.grid.minor.x = element_blank(),
@@ -90,7 +91,7 @@ plot_func <- function(data, lab, facet) {
     geom_point(aes(color = variable), size = 4) +
     geom_line(
       aes(color = variable, linetype = variable),
-      size = 0.75
+      linewidth = 0.75
     ) +
     geom_ribbon(
       aes(ymax = upper, ymin = lower, fill = variable),

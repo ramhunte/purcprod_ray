@@ -55,8 +55,8 @@ server <- function(input, output, session) {
         facet = "unit_lab"
       )
     },
-    height = 750,
-    width = 1020
+    height = plot_height,
+    width = plot_width
   )
 
   ##################### Reactive By Product Type DF ########################### ----
@@ -116,8 +116,8 @@ server <- function(input, output, session) {
         facet = "unit_lab"
       )
     },
-    height = 750,
-    width = 1020
+    height = plot_height,
+    width = plot_width
   )
   ##################### Reactive Data Table  #########################
   ##Creating the data table
@@ -148,7 +148,26 @@ server <- function(input, output, session) {
       }
       df
     },
-    height = 750,
-    width = 1020
+    options = list(
+      scrollX = TRUE, # Enable horizontal scroll
+      scrollY = "720px"
+    ) # Set vertical scroll height (can adjust)
+    # height = plot_height,
+    # width = plot_width
+  )
+
+  ##################### Data Table Download #########################
+
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste("purchprod", input$tab_top, "data.csv", sep = "_")
+    },
+    content = function(file) {
+      if (input$tab_top == "Summary") {
+        write.csv(sum_plot_df(), file)
+      } else if (input$tab_top == "By Product Type") {
+        write.csv(prod_plot_df(), file)
+      }
+    }
   )
 }

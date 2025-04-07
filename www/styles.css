@@ -14,3 +14,11 @@
       font-size: 30px;
       text-align: center;
     }
+
+#downloadData {
+  display: block;
+  margin: 30px auto 10px auto;  /* top-bottom 20px, auto left-right */
+  max-width: 200px;   /* Controls the max width of the button */
+  width: fit-content; /* Allows the button width to adapt to its content */
+}
+

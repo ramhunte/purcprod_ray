@@ -41,7 +41,7 @@ shinyUI(
                   inputId = "metricInput",
                   label = "Metric",
                   choices = sort(unique(sumdf$metric)),
-                  selected = 'Purchase weight'
+                  selected = unique(sumdf$metric)
                 ),
                 # Statistic
                 radioButtons(
@@ -71,7 +71,7 @@ shinyUI(
                   inputId = "protypeInput",
                   label = "Product types",
                   choices = unique(proddf$type),
-                  selected = 'Canned'
+                  selected = unique(proddf$type)
                 ),
                 # Statistic
                 radioButtons(
@@ -148,7 +148,14 @@ shinyUI(
               ), # END Processor size/type tabPanel
               id = "tab_bottom",
               type = c("tabs")
-            ) # END tabsetPanel
+            ), # END tabsetPanel
+
+            # Download data button
+            downloadButton(
+              "downloadData",
+              "Download",
+              class = "btn-secondary custom-download"
+            )
           ), # END sidebarPanel
 
           ########################### mainPanel #######################################

@@ -1,3 +1,7 @@
-### ontact info here
+## Contact info here
 
-## contact info text place holder
+### contact info text place holder
+
+Blah
+blah
+blah
