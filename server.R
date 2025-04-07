@@ -150,10 +150,8 @@ server <- function(input, output, session) {
     },
     options = list(
       scrollX = TRUE, # Enable horizontal scroll
-      scrollY = "720px"
-    ) # Set vertical scroll height (can adjust)
-    # height = plot_height,
-    # width = plot_width
+      scrollY = "680px" # setting vertical scroll height
+    )
   )
 
   ##################### Data Table Download #########################

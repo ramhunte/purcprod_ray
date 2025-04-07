@@ -73,5 +73,5 @@ pracs_choices <- c(
 )
 
 # plot height and width
-plot_height <- 780
-plot_width <- 1020
+plot_height <- 788
+plot_width <- 975

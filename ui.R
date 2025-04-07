@@ -3,8 +3,9 @@ library(bslib)
 
 # UI creating a fluidPage
 shinyUI(
+  # START fluid_page
   page_fluid(
-    # navbar page at the top
+    # calling themes for the page elements
     theme = bs_theme(
       bootswatch = "materia",
       primary = "lightblue",
@@ -13,18 +14,20 @@ shinyUI(
       secondary = "lightblue",
       # success = "#009E73",
     ),
+
+    # START page_navbar
     page_navbar(
       id = "navbar",
       title = "Purchase Production App",
-
+      # calling css file for more styles
       tags$head(
         tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
       ),
 
-      # tabPanel 1
+      # START "Explore the Data" tab
       nav_panel(
         "Explore the Data",
-        # page layout
+        # START sidebarLayout
         sidebarLayout(
           ########################### Top tabSet ######################################
           #################### (Summary; By Product Type) #############################
@@ -164,10 +167,14 @@ shinyUI(
           mainPanel(
             style = page_height,
             # START tabsetPanel
-            tabsetPanel(
-              type = "tabs",
+            # tabsetPanel(
+            navset_card_pill(
+              height = 880, # height of the card that holds the plots
+              full_screen = TRUE,
+              # type = "tabs",
               # START plot tabPanel
-              tabPanel(
+              # tabPanel(
+              nav_panel(
                 "Plot",
                 conditionalPanel(
                   condition = "input.tab_top == 'Summary'",
@@ -180,11 +187,16 @@ shinyUI(
               ), # END plot tabPanel
 
               # START table tabPanel
-              tabPanel("Table", DT::dataTableOutput("table")) # END  table tabPanel
+              # tabPanel(
+              nav_panel(
+                height = 880,
+                "Table",
+                DT::dataTableOutput("table")
+              ) # END  table tabPanel
             ) # END tabsetPanel
           ) # END mainPanel
         ) # END sidebarLayout
-      ), # END tabPanel 1
+      ), # END "Explore the Data" tab
 
       # tabPanel 2
       nav_panel(
@@ -217,6 +229,6 @@ shinyUI(
       ), # END tabPanel 4
 
       footer = footer() # END footer
-    ) # END fluidPage
-  )
+    ) # END page_navbar
+  ) # END fluid_page
 ) # END UI
