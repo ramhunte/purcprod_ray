@@ -1,5 +1,5 @@
 # setting the page height for the footer and header to be used in the UI
-page_height <- "min-height: 105vh;"
+page_height <- "min-height: 110vh;"
 
 # custom function to write a footer
 footer <- function() {

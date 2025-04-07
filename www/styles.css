@@ -14,11 +14,35 @@
       font-size: 30px;
       text-align: center;
     }
+    
+.form-label, .shiny-input-container .control-label {
+  
+  margin-top: 10px;
+}
+    
+#osDropdown {
+  display: block;
+  padding: 4px 10px;
+  max-width: 200px;   /* Controls the max width of the button */
+  width: fit-content; /* Allows the button width to adapt to its content */
+}
 
 #downloadData {
   display: block;
+  padding: 4px 10px;    /* Less padding */
   margin: 30px auto 10px auto;  /* top-bottom 20px, auto left-right */
   max-width: 200px;   /* Controls the max width of the button */
   width: fit-content; /* Allows the button width to adapt to its content */
+}
+
+/* removing scroll bars from data table */
+.dataTables_scrollBody::-webkit-scrollbar {  /* Chrome, Safari */
+    display: none;
+  }
+  
+  
+div.dataTables_wrapper div.dataTables_length select {
+    width: 100px;
+    display: inline-block;
 }
 

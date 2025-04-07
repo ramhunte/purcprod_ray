@@ -100,7 +100,7 @@ shinyUI(
                   selected = "All production"
                 ),
                 dropdownButton(
-                  inputId = "dropdown",
+                  inputId = "osDropdown",
                   label = "Other Species",
                   circle = FALSE,
                   checkboxGroupInput(
