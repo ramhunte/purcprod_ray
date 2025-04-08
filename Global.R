@@ -72,7 +72,3 @@ pracs_choices <- c(
   'Groundfish production',
   'Other species production'
 )
-
-# plot height and width
-plot_height <- 788
-plot_width <- 975

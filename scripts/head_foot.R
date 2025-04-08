@@ -1,5 +1,5 @@
 # setting the page height for the footer and header to be used in the UI
-page_height <- "min-height: 125vh;"
+# page_height <- "min-height: 115vh;"
 
 # custom function to write a footer
 footer <- function() {
@@ -10,7 +10,8 @@ footer <- function() {
       bottom: 0;
       width: 100%;
       text-align: center;
-      padding: 10px;",
+      padding: 10px;
+      font-size: 11px;",
 
     HTML(paste0(
       # NWFSC
@@ -31,7 +32,7 @@ footer <- function() {
       "<a href='https://www.fisheries.noaa.gov/about-us/privacy-policy' target='_blank'>NOAA privacy policy </a> - ",
       # NOAA information quality
       "<a href='https://www.noaa.gov/information-technology' target='_blank'>NOAA information quality </a> - ",
-      "<br>",
+      # "<br>",
       format(Sys.Date(), "%Y")
     ))
   )

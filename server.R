@@ -55,9 +55,7 @@ server <- function(input, output, session) {
         lab = input$statInput,
         facet = "unit_lab"
       )
-    },
-    height = plot_height,
-    width = plot_width
+    }
   )
 
   ##################### Reactive By Product Type DF ########################### ----
@@ -116,9 +114,7 @@ server <- function(input, output, session) {
         lab = input$stat2Input,
         facet = "unit_lab"
       )
-    },
-    height = plot_height,
-    width = plot_width
+    }
   )
   ##################### Reactive Data Table  #########################
   ##Creating the data table
@@ -169,4 +165,8 @@ server <- function(input, output, session) {
       }
     }
   )
+
+  observe({
+    print(input$tab_top)
+  })
 }
