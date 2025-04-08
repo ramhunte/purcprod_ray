@@ -1,6 +1,3 @@
-library(shiny)
-library(bslib)
-
 # UI creating a fluidPage
 shinyUI(
   # START fluid_page
@@ -8,10 +5,10 @@ shinyUI(
     # calling themes for the page elements
     theme = bs_theme(
       bootswatch = "materia",
-      primary = "lightblue",
-      bg = "#005377",
-      fg = "white",
-      secondary = "lightblue",
+      primary = "#00797F",
+      bg = "#E9F3F6",
+      fg = "#001743",
+      secondary = "#FFFFFF",
       # success = "#009E73",
     ),
 
@@ -70,9 +67,9 @@ shinyUI(
           # START sidbarPanel
           sidebarPanel(
             # START tabsetPanel
-            tabsetPanel(
+            navset_card_pill(
               # START "Summary" tabPanel
-              tabPanel(
+              nav_panel(
                 "Summary",
                 # Metric
                 checkboxGroupInput(
@@ -91,7 +88,7 @@ shinyUI(
               ), # END Summary tabPanel
 
               # START "Product Type" tabPanel
-              tabPanel(
+              nav_panel(
                 "By Product Type",
                 # Metric
                 selectInput(
@@ -119,17 +116,17 @@ shinyUI(
                   selected = "Median"
                 )
               ), #END Product Type tabPanel
-              id = "tab_top",
-              type = c("tabs")
+              id = "tab_top"
+              # type = c("tabs")
             ), #END tabsetPanel
 
             ############################### Bottom tabSet ###################################
             ############# (Production Activities; Region; Processor size/type) ##############
 
             # START tabsetPanel
-            tabsetPanel(
+            navset_card_pill(
               # START "Production Activities" tabPanel
-              tabPanel(
+              nav_panel(
                 "Production Activities",
                 checkboxGroupInput(
                   inputId = "prodacInput",
@@ -151,7 +148,7 @@ shinyUI(
               ), # END "Production Activities" tabPanel
 
               # START Region tabPanel
-              tabPanel(
+              nav_panel(
                 "Region",
                 checkboxGroupInput(
                   inputId = "regionInput",
@@ -169,7 +166,7 @@ shinyUI(
               ), # END Region tabPanel
 
               # START "Processor Size/Type" tabPanel
-              tabPanel(
+              nav_panel(
                 "Processor Size/Type",
                 checkboxGroupInput(
                   inputId = "sizeInput",
@@ -185,8 +182,8 @@ shinyUI(
                   selected = "All production"
                 )
               ), # END Processor size/type tabPanel
-              id = "tab_bottom",
-              type = c("tabs")
+              id = "tab_bottom"
+              # type = c("tabs")
             ), # END tabsetPanel
 
             # downloadButton
@@ -205,26 +202,34 @@ shinyUI(
             # START navset_card_pill
             # tabsetPanel(
             navset_card_pill(
-              height = 880, # height of the card that holds the plots
+              height = 900, # height of the card that holds the plots
               full_screen = TRUE,
               # START "Plot" nav_panel
               nav_panel(
                 "Plot",
                 conditionalPanel(
                   condition = "input.tab_top == 'Summary'",
-                  plotOutput("sumplot")
+                  shinycssloaders::withSpinner(
+                    # adding a cool loader
+                    plotOutput("sumplot")
+                  )
                 ),
                 conditionalPanel(
                   condition = "input.tab_top == 'By Product Type'",
-                  plotOutput("productplot")
+                  shinycssloaders::withSpinner(
+                    # adding a cool loader
+                    plotOutput("productplot")
+                  )
                 )
               ), # END Plot nav_panel
 
               # START "Table" nav_panel
               nav_panel(
-                height = 880,
                 "Table",
-                DT::dataTableOutput("table")
+                shinycssloaders::withSpinner(
+                  # adding a cool loader
+                  dataTableOutput("table")
+                )
               ) # END  "Table" nav_panel
             ) # END navset_card_pill
           ) # END mainPanel

@@ -10,6 +10,7 @@ library(dplyr)
 library(scales)
 library(DT)
 library(shinyWidgets)
+library(shinycssloaders)
 
 # read in raw data
 raw_purcprod <- readRDS("data/mini_purcprod.RDS")

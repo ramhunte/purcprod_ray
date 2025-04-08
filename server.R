@@ -1,5 +1,6 @@
 server <- function(input, output, session) {
   # thematic::thematic_shiny()
+  # bslib::bs_themer()
 
   ##################### Reactive Summary DF's #########################
 
