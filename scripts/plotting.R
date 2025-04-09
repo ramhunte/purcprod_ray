@@ -2,6 +2,7 @@
 
 # line colors ----
 line_col <- c(
+  # species
   "All production" = "black",
   "Groundfish production" = '#C1052F',
   "Pacific whiting" = '#D89B2C',
@@ -20,22 +21,41 @@ line_col <- c(
   "Coastal pelagics" = '#001B70',
   "Other shellfish" = '#595478',
   "Other species" = '#C0B3B6',
+
+  # states
   "California" = '#001B70',
   "Washington and Oregon" = '#C1052F',
+
+  # processor size
   "Small" = '#001B70',
   "Medium" = '#C1052F',
   "Large" = '#648C1C',
-  "Non-processor" = '#D89B2C'
+  "Non-processor" = '#D89B2C',
+
+  # product type
+  "Canned" = "#287271",
+  "Fillet" = "#9E2B25",
+  "Fresh" = "#208AAE",
+  "Frozen" = "#FF9F1C",
+  "Headed-and-gutted" = "#8E6C8A",
+  "Other" = "#B1B695",
+  "Unprocessed" = "#607744",
+  "Smoked" = "#D77A61"
 )
 
 # line type ----
 line_ty <- c(
+  # states
   "California" = 'solid',
   "Washington and Oregon" = 'solid',
+
+  # processor size
   "Small" = 'solid',
   "Medium" = 'solid',
   "Large" = 'solid',
   "Non-processor" = 'solid',
+
+  # species
   "All production" = "solid",
   "Groundfish production" = 'solid',
   "Pacific whiting" = 'solid',
@@ -46,6 +66,8 @@ line_ty <- c(
   "Petrale sole" = 'solid',
   "Thornyheads" = 'solid',
   "Other groundfish species" = 'solid',
+
+  # other species
   "Other species production" = 'dashed',
   "Crab" = 'dashed',
   "Shrimp" = 'dashed',
@@ -53,19 +75,29 @@ line_ty <- c(
   "Tuna" = 'dashed',
   "Coastal pelagics" = 'dashed',
   "Other shellfish" = 'dashed',
-  "Other species" = 'dashed'
+  "Other species" = 'dashed',
+
+  # product type
+  "Canned" = "solid",
+  "Fillet" = "solid",
+  "Fresh" = "solid",
+  "Frozen" = "solid",
+  "Headed-and-gutted" = "solid",
+  "Other" = "solid",
+  "Unprocessed" = "solid",
+  "Smoked" = "solid"
 )
 
 
 # custom ggplot function ----
-plot_func <- function(data, lab, facet) {
+plot_func <- function(data, lab, group, facet) {
   # return nothing if plot is Null
   if (is.null(data)) {
     return()
   }
 
   # ggplot code
-  ggplot(data, aes(x = year, y = value, group = variable)) +
+  ggplot(data, aes(x = year, y = value, group = .data[[group]])) +
     scale_fill_manual(values = line_col) +
     scale_color_manual(values = line_col) +
     scale_linetype_manual(values = line_ty) +
@@ -88,13 +120,13 @@ plot_func <- function(data, lab, facet) {
       panel.grid.major.x = element_line(size = 1.2),
       axis.line = element_line(color = "grey", linewidth = 1) # Adds borders to only x and y axes
     ) +
-    geom_point(aes(color = variable), size = 4) +
+    geom_point(aes(color = .data[[group]]), size = 4) +
     geom_line(
-      aes(color = variable, linetype = variable),
+      aes(color = .data[[group]], linetype = .data[[group]]),
       linewidth = 0.75
     ) +
     geom_ribbon(
-      aes(ymax = upper, ymin = lower, fill = variable),
+      aes(ymax = upper, ymin = lower, fill = .data[[group]]),
       alpha = .2
     ) +
     # facet wrap based on the column specified to be faceted in the function

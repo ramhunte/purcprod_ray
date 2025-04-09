@@ -1,27 +1,13 @@
 /* fmt: skip file */
 
 
-/*
-.form-label, .shiny-input-container .control-label {
-    display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 700;
-} */
-
 .shiny-output-error-validation {
       color: #2593AF;
       font-size: 30px;
       text-align: center;
     }
 
-/*    
-.form-label, .shiny-input-container .control-label {
-  
-  margin-top: 10px;
-} */
-    
-#osDropdown {
+#osDropdown, #os2Dropdown {
   display: block;
   padding: 4px 10px;
   max-width: 200px;   /* Controls the max width of the button */

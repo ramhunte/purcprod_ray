@@ -79,19 +79,9 @@ shinyUI(
               "Summary",
               class = "custom-card",
               # Metric
-              checkboxGroupInput(
-                inputId = "metricInput",
-                label = "Metric",
-                choices = sort(unique(sumdf$metric)),
-                selected = unique(sumdf$metric)
-              ),
+              metric_func1(inputID = "metricInput"),
               # Statistic
-              radioButtons(
-                inputId = "statInput",
-                label = "Statistic",
-                choices = c("Mean", "Median", "Total"),
-                selected = "Median"
-              )
+              stat_func(inputID = "statInput")
             ), # END Summary tabPanel
 
             # START "Product Type" tabPanel
@@ -99,110 +89,44 @@ shinyUI(
               "By Product Type",
               class = "custom-card",
               # Metric
-              selectInput(
-                inputId = 'metric2Input',
-                label = "Select a metric",
-                choices = c(
-                  'Production value',
-                  'Production price (per lb)',
-                  'Production weight'
-                ),
-                selectize = F
-              ),
+              metric_func2(inputID = "metric2Input"),
+
               # Product Type
-              checkboxGroupInput(
-                inputId = "protypeInput",
-                label = "Product types",
-                choices = unique(proddf$type),
-                selected = unique(proddf$type)
-              ),
+              prodtype_func(inputID = "protypeInput"),
+
               # Statistic
-              radioButtons(
-                inputId = "stat2Input",
-                label = "Statistic",
-                choices = c("Mean", "Median", "Total"),
-                selected = "Median"
-              )
+              stat_func(inputID = "stat2Input")
             ), #END Product Type tabPanel
+
+            # START Species nav_panel
+            nav_panel(
+              "Species",
+              class = "custom-card",
+              # Metric
+              metric_func2(inputID = "metric3Input"),
+
+              # Species
+              specs_func(inputID = "specsInput"),
+
+              # Other Species
+
+              os_func(inputID1 = "os2Dropdown", inputID2 = "osps2Input"),
+
+              stat_func(inputID = "stat3Input")
+            ), # END Species nav_panel
+
             id = "tab_top"
-            # type = c("tabs")
           ), #END tabsetPanel
 
           ############################### Bottom tabSet ###################################
           ############# (Production Activities; Region; Processor size/type) ##############
 
           # START tabsetPanel
-          navset_card_pill(
-            # START "Production Activities" tabPanel
-            nav_panel(
-              "Production Activities",
-              class = "custom-card",
-              checkboxGroupInput(
-                inputId = "prodacInput",
-                label = "",
-                choices = prodac_choices,
-                selected = "All production"
-              ),
-              # Other Species
-              dropdownButton(
-                inputId = "osDropdown",
-                label = "Other Species",
-                circle = FALSE,
-                checkboxGroupInput(
-                  "ospsInput",
-                  "",
-                  choices = osps_choices
-                )
-              )
-            ), # END "Production Activities" tabPanel
 
-            # START Region tabPanel
-            nav_panel(
-              "Region",
-              class = "custom-card",
-              checkboxGroupInput(
-                inputId = "regionInput",
-                label = "",
-                choices = reg_choices,
-                selected = "California"
-              ),
-              # Production Activities (Region)
-              radioButtons(
-                inputId = "pracs1Input",
-                label = "Production activities",
-                choices = pracs_choices,
-                selected = "All production"
-              )
-            ), # END Region tabPanel
-
-            # START "Processor Size/Type" tabPanel
-            nav_panel(
-              "Processor Size/Type",
-              class = "custom-card",
-              checkboxGroupInput(
-                inputId = "sizeInput",
-                label = "",
-                choices = size_choices,
-                selected = "Small"
-              ),
-              # Production Actives (Processor type/size)
-              radioButtons(
-                inputId = "pracs2Input",
-                label = "Production activities",
-                choices = pracs_choices,
-                selected = "All production"
-              )
-            ), # END Processor size/type tabPanel
-            id = "tab_bottom"
-            # type = c("tabs")
-          ), # END tabsetPanel
+          uiOutput("dynamicTabs"),
 
           # downloadButton
-          downloadButton(
-            "downloadData",
-            "Download",
-            class = "btn-secondary custom-download"
-          )
+          down_func(outputID = "downloadData")
         ), # END sidebarPanel
 
         ########################### mainPanel #######################################
@@ -217,14 +141,22 @@ shinyUI(
               condition = "input.tab_top == 'Summary'",
               shinycssloaders::withSpinner(
                 # adding a cool loader
-                plotOutput("sumplot", width = "100%", height = "655px")
+                plotOutput("sumplot", width = "100%", height = "575px")
               )
             ),
             conditionalPanel(
               condition = "input.tab_top == 'By Product Type'",
               shinycssloaders::withSpinner(
                 # adding a cool loader
-                plotOutput("productplot", width = "100%", height = "655px")
+                plotOutput("productplot", width = "100%", height = "575px")
+              )
+            ),
+
+            conditionalPanel(
+              condition = "input.tab_top == 'Species'",
+              shinycssloaders::withSpinner(
+                # adding a cool loader
+                plotOutput("specsplot", width = "100%", height = "575px")
               )
             )
           ), # END Plot nav_panel
