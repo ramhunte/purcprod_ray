@@ -6,10 +6,14 @@ shinyUI(
     # calling themes for the page elements
     theme = bs_theme(
       bootswatch = "materia",
-      primary = "#00797F",
+      secondary = "#5EB6D9",
       fg = "#001743",
-      bg = "#E9F3F6",
-      secondary = "#FFFFFF",
+      bg = "#C2D9E3",
+      # "#00797F",
+      primary = "#00559B",
+
+      # "#00559B",
+      'navbar-bg' = "#001743"
     ),
 
     # START page_navbar
@@ -73,6 +77,7 @@ shinyUI(
             # START "Summary" tabPanel
             nav_panel(
               "Summary",
+              class = "custom-card",
               # Metric
               checkboxGroupInput(
                 inputId = "metricInput",
@@ -92,6 +97,7 @@ shinyUI(
             # START "Product Type" tabPanel
             nav_panel(
               "By Product Type",
+              class = "custom-card",
               # Metric
               selectInput(
                 inputId = 'metric2Input',
@@ -130,6 +136,7 @@ shinyUI(
             # START "Production Activities" tabPanel
             nav_panel(
               "Production Activities",
+              class = "custom-card",
               checkboxGroupInput(
                 inputId = "prodacInput",
                 label = "",
@@ -152,6 +159,7 @@ shinyUI(
             # START Region tabPanel
             nav_panel(
               "Region",
+              class = "custom-card",
               checkboxGroupInput(
                 inputId = "regionInput",
                 label = "",
@@ -170,6 +178,7 @@ shinyUI(
             # START "Processor Size/Type" tabPanel
             nav_panel(
               "Processor Size/Type",
+              class = "custom-card",
               checkboxGroupInput(
                 inputId = "sizeInput",
                 label = "",
@@ -203,18 +212,19 @@ shinyUI(
           # START "Plot" nav_panel
           nav_panel(
             title = "Plot",
+            class = "custom-card",
             conditionalPanel(
               condition = "input.tab_top == 'Summary'",
               shinycssloaders::withSpinner(
                 # adding a cool loader
-                plotOutput("sumplot", width = "100%", height = "620px")
+                plotOutput("sumplot", width = "100%", height = "655px")
               )
             ),
             conditionalPanel(
               condition = "input.tab_top == 'By Product Type'",
               shinycssloaders::withSpinner(
                 # adding a cool loader
-                plotOutput("productplot", width = "100%", height = "620px")
+                plotOutput("productplot", width = "100%", height = "655px")
               )
             )
           ), # END Plot nav_panel
@@ -222,6 +232,7 @@ shinyUI(
           # START "Table" nav_panel
           nav_panel(
             "Table",
+            class = "custom-card",
             shinycssloaders::withSpinner(
               # adding a cool loader
               dataTableOutput("table")
