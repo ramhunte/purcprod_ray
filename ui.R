@@ -123,7 +123,17 @@ shinyUI(
 
           # START tabsetPanel
 
-          uiOutput("dynamicTabs"),
+          # uiOutput("dynamicTabs"),
+
+          conditionalPanel(
+            condition = "input.tab_top != 'Species'",
+            uiOutput("otherTabs")
+          ),
+
+          conditionalPanel(
+            condition = "input.tab_top == 'Species'",
+            uiOutput("speciesTabs")
+          ),
 
           # downloadButton
           down_func(outputID = "downloadData")

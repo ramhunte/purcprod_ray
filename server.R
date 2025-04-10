@@ -1,32 +1,39 @@
 server <- function(input, output, session) {
-  # thematic::thematic_shiny()
-  # bslib::bs_themer()
+  # conditionally rendering second nav_bar tabs (Production Activities, Region, and Size) depending on top tabs (Summary, By Product Type, Species)
 
-  output$dynamicTabs <- renderUI({
-    dynatabs_func(tab_top_value = input$tab_top)
+  # conditional panel render if top nav_panels are "Summary" or "By Product Type"
+  output$otherTabs <- renderUI({
+    other_tabs_func()
   })
 
-  # tabs_ui <- reactiveVal(dynatabs_func("Summary")) # Set initial value
-  #
-  # observeEvent(input$tab_top, {
-  #   if (input$tab_top == "Species") {
-  #     tabs_ui(dynatabs_func("Species"))
-  #   } else if (input$tab_top %in% c("Summary", "Product")) {
-  #     # Only update if current UI isn't already the Summary/Product version
-  #     if (!identical(tabs_ui(), dynatabs_func("Summary"))) {
-  #       tabs_ui(dynatabs_func("Summary"))
-  #     }
-  #   }
-  # })
-  #
-  # output$dynamicTabs <- renderUI({
-  #   tabs_ui()
+  # conditional panel render if top nav_panels is "Species"
+  output$speciesTabs <- renderUI({
+    species_tabs_func()
+  })
+
+  # on initial render, input$tab_bottom is NULL b/c hasnt been rendered yet, so asigning it a value
+  observe({
+    if (input$tab_top != "Species" && is.null(input$tab_bottom)) {
+      updateTabsetPanel(
+        session,
+        "tab_bottom",
+        selected = "Production Activities"
+      )
+    }
+  })
+
+  # observe({
+  #   cat("tab_top:", input$tab_top, "\n")
+  #   cat("tab_bottom:", input$tab_bottom, "\n")
   # })
 
   ##################### Reactive Summary DF's #########################
 
   # reactive data frame for Summary tab
   sum_plot_df <- reactive({
+    req(input$tab_top == "Summary")
+    req(input$tab_bottom)
+
     if (input$tab_top == "Summary") {
       if (input$tab_bottom == "Production Activities") {
         df <- sumdf_prac |>
@@ -79,7 +86,6 @@ server <- function(input, output, session) {
       )
     }
   )
-
   ##################### Reactive By Product Type DF ########################### ----
 
   # reactive data frame for By Product Type tab
@@ -188,40 +194,15 @@ server <- function(input, output, session) {
   output$table <- DT::renderDataTable(
     {
       if (input$tab_top == "Summary") {
-        df <- sum_plot_df() |>
-          select(-c(ylab, tab, unit_lab)) |>
-          mutate(
-            variance = round(variance, 2),
-            q25 = round(q25, 2),
-            q75 = round(q75, 2),
-            value = round(value, 2),
-            lower = round(lower, 2),
-            upper = round(upper, 2)
-          )
-      } else if (input$tab_top %in% c("By Product Type")) {
-        df <- prod_plot_df() |>
-          select(-c(ylab, tab, unit_lab)) |>
-          mutate(
-            variance = round(variance, 2),
-            q25 = round(q25, 2),
-            q75 = round(q75, 2),
-            value = round(value, 2),
-            lower = round(lower, 2),
-            upper = round(upper, 2)
-          )
-      } else if (input$tab_top %in% c("Species")) {
-        df <- specs_plot_df() |>
-          select(-c(ylab, tab, unit_lab)) |>
-          mutate(
-            variance = round(variance, 2),
-            q25 = round(q25, 2),
-            q75 = round(q75, 2),
-            value = round(value, 2),
-            lower = round(lower, 2),
-            upper = round(upper, 2)
-          )
+        df <- sum_plot_df()
+      } else if (input$tab_top == "By Product Type") {
+        df <- prod_plot_df()
+      } else if (input$tab_top == "Species") {
+        df <- specs_plot_df()
       }
-      df
+
+      # Process the data using the helper function
+      process_df(df)
     },
     options = list(
       scrollX = TRUE, # Enable horizontal scroll

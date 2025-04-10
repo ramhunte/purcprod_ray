@@ -141,39 +141,39 @@ down_func <- function(outputID) {
   )
 }
 
-# Dynamic tabs func
+# Dynamic bottom tabs func
 
-dynatabs_func <- function(tab_top_value) {
-  if (tab_top_value == "Species") {
-    navset_card_pill(
-      nav_panel(
-        "Product Type",
-        class = "custom-card",
-        prodtype_func("protype2Input")
-      ),
-      id = "tab_bottom"
-    )
-  } else {
-    navset_card_pill(
-      nav_panel(
-        "Production Activities",
-        class = "custom-card",
-        specs_func(inputID = "prodacInput"),
-        os_func(inputID1 = "osDropdown", inputID2 = "ospsInput")
-      ),
-      nav_panel(
-        "Region",
-        class = "custom-card",
-        reg_func(inputID = "regionInput"),
-        pracs_func(inputID = "pracs1Input")
-      ),
-      nav_panel(
-        "Processor Size/Type",
-        class = "custom-card",
-        size_func(inputID = "sizeInput"),
-        pracs_func(inputID = "pracs2Input")
-      ),
-      id = "tab_bottom"
-    )
-  }
+species_tabs_func <- function() {
+  navset_card_pill(
+    nav_panel(
+      "Product Type",
+      class = "custom-card",
+      prodtype_func("protype2Input")
+    ),
+    id = "tab_bottom"
+  )
+}
+
+other_tabs_func <- function() {
+  navset_card_pill(
+    nav_panel(
+      "Production Activities",
+      class = "custom-card",
+      specs_func(inputID = "prodacInput"),
+      os_func(inputID1 = "osDropdown", inputID2 = "ospsInput")
+    ),
+    nav_panel(
+      "Region",
+      class = "custom-card",
+      reg_func(inputID = "regionInput"),
+      pracs_func(inputID = "pracs1Input")
+    ),
+    nav_panel(
+      "Processor Size/Type",
+      class = "custom-card",
+      size_func(inputID = "sizeInput"),
+      pracs_func(inputID = "pracs2Input")
+    ),
+    id = "tab_bottom"
+  )
 }

@@ -132,3 +132,17 @@ plot_func <- function(data, lab, group, facet) {
     # facet wrap based on the column specified to be faceted in the function
     facet_wrap(as.formula(paste("~", facet)), scales = 'free_y', ncol = 2)
 }
+
+# function for processing DT render data
+dt_func <- process_df <- function(df) {
+  df %>%
+    select(-c(ylab, tab, unit_lab)) %>%
+    mutate(
+      variance = round(variance, 2),
+      q25 = round(q25, 2),
+      q75 = round(q75, 2),
+      value = round(value, 2),
+      lower = round(lower, 2),
+      upper = round(upper, 2)
+    )
+}
